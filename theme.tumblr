@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja">
+	<head>
+		<!-- load libraries -->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="application/javascript"></script>
+
+		<script type="application/javascript">
+			// <![CDATA[
+
+			// for isbn2link.js
+			var AMAZON_AFFILIATE_ID = 'meigenbako-22';
+
+			// ]]>
+		</script>
+		<script src="http://amaisaeta.up.seesaa.net/common/isbn2link.js" type="application/javascript"></script>
+
+		<!-- APPEARANSE COLORS {{{ -->
+		<meta name="color:PageTitle" content="#000" />
+		<meta name="font:PageTitle" content="serif" />
+		<meta name="color:PageBackground" content="#fff" />
+
+		<meta name="color:NavigationText" content="#000" />
+		<meta name="font:NavigationText" content="serif" />
+		<meta name="color:NavigationBackground" content="#b0ffb0" />
+
+		<meta name="color:MainContentBackground" content="#fff" />
+		<meta name="color:PostTitle" content="#444" />
+		<meta name="font:PostTitle" content="serif" />
+		<meta name="color:PostBackground" content="#fff" />
+		<meta name="color:PostText" content="#000" />
+		<meta name="font:PostText" content="" />
+		<meta name="color:InfoText" content="#000" />
+		<meta name="font:InfoText" content="" />
+		<meta name="color:InfoBackground" content="#ff7" />
+
+		<meta name="color:SubContentText" content="#000" />
+		<meta name="font:SubContentText" content="serif" />
+		<meta name="color:SubContentBackground" content="#ffa" />
+
+		<meta name="color:Description" content="#666" />
+		<meta name="font:Description" content="serif" />
+		<meta name="color:DescriptionBackground" content="#ffa" />
+
+		<!-- }}} -->
+
+		<title>{Title}{block:PostSummary} - {PostSummary}{/block:PostSummary}</title>
+		<link rel="alternate" type="application/rss+xml" title="RSS" href="{RSS}"/>
+		<link rel="icon" href="{Favicon}"/>
+		<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+		<meta name="viewport" content="width=775"/> <!-- iPhone -->
+
+		<style type="text/css"> /* {{{ */
+			/* <![CDATA[ */
+			/* * { outline: dashed 1px red; } /* [DEBUG] */
+			#header * { margin: 0; } /* [DEBUG] Customize画面でタイトル上下に正体不明のmarginが出現する為。実際のページではどうか確認する事 */
+			* { font-size: inherit; }
+
+			body {
+				font: normal normal normal 24px / normal sans-serif;
+				background-color: {color:PageBackground};
+				color: {color:PostText};
+			}
+
+			h1 {
+				font-size: 3em;
+				font-family: {font:PageTitle};
+				text-shadow: 1px 1px 2px silver;
+				letter-spacing: 0.1em;
+				white-space: nowrap;
+				text-align: center;
+				margin: 10px auto;
+			}
+			h1 > a {
+				color: {color:PageTitle};
+				text-decoration: none;
+			}
+
+			#nav {
+				background-color: transparent;
+				background-image: linear-gradient(top, white 0px, white 2px, silver 4px, silver 6px);
+				background-image: -moz-linear-gradient(top, white 0px, white 2px, silver 4px, silver 6px);
+				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.0, white), color-stop(0.5, white), color-stop(0.5, silver), color-stop(1.0,silver));
+				background-size: 1px 6px;
+				-moz-background-size: 1px 6px;
+				-webkit-background-size: 1px 6px;
+				background-repeat: repeat;
+				padding-left: 10px;
+				padding-right: 10px;
+				margin-top: 5px;
+				margin-bottom: 20px;
+				position: relative;
+			}
+			#nav:before {
+				content: ".";
+				color: transparent;
+				background-image: linear-gradient(left, {color:PageBackground}, rgba(255,255,255,0));
+				background-image: -moz-linear-gradient(left, {color:PageBackground}, rgba(255,255,255,0));
+				background-image: -webkit-gradient(linear, left top, right top, from({color:PageBackground}), to(rgba(255,255,255,0)));
+				display: block;
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 64px;
+				height: 100%;
+			}
+			#nav:after {
+				content: ".";
+				color: transparent;
+				background-image: linear-gradient(left, rgba(255,255,255,0), {color:PageBackground});
+				background-image: -moz-linear-gradient(left, rgba(255,255,255,0), {color:PageBackground});
+				background-image: -webkit-gradient(linear, left top, right top, from(rgba(255,255,255,0)), to({color:PageBackground}));
+				display: block;
+				position: absolute;
+				top: 0;
+				right: 0;
+				width: 64px;
+				height: 100%;
+			}
+			#nav > li {
+				font-family: {font:NavigationText};
+				color: {color:NavigationText};
+				background-color: {color:NavigationBackground};
+				background-image: linear-gradient(-90deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.3));
+				background-image: -moz-linear-gradient(-90deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.3));
+				background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,0)), color-stop(0.5, rgba(0,0,0,0)), to(rgba(0,0,0,0.3)));
+				text-align: center;
+				vertical-align: middle;
+				border: 1px solid gray;
+				border-radius: 1em;
+				-moz-border-radius: 50%;
+				-webkit-border-radius: 1em;
+				box-shadow: 8px 8px 8px rgba(50%,50%,50%,0.7), inset 0 0 5px 1px rgba(0,0,0,0.3);
+				-moz-box-shadow: 8px 8px 8px rgba(50%,50%,50%,0.7), inset 0 0 5px 1px rgba(0,0,0,0.3);
+				-webkit-box-shadow: 8px 8px 8px rgba(50%,50%,50%,0.7);	/* 複数指定、inset不可 */
+				padding: 5px 25px;
+				margin: auto 0.5em;
+				display: inline-block;
+				position: relative;
+				top: 0;
+			}
+			#nav > li#nav-search { /* 検索フォームのみ右寄せ */
+				text-align: right;
+				background-color: transparent;
+				background-image: none;
+				border-style: none;
+				border-radius: 0;
+				-moz-border-radius: 0;
+				-webkit-border-radius: 0;
+				box-shadow: 0 0 0 transparent;
+				-moz-box-shadow: 0 0 0 transparent;
+				-webkit-box-shadow: 0 0 0 transparent;
+				position: absolute;
+				right: 0;
+				top: 0;
+				z-index: 1;
+			}
+			#nav > li#nav-search > form {
+				font-size: 0.9em;
+				display: inline-block;
+			}
+			#nav > li#nav-search > form input[name=q] {
+				background-color: white;
+				color: black;
+				border: 1px solid gray;
+				border-radius: 1em;
+				-moz-border-radius: 50%;
+				-webkit-border-radius: 1em;
+				padding-left: 0.5em;
+				padding-right: 0.5em;
+				width: 150px;
+			}
+			#nav > li > a {
+				color: {color:NavigationText};
+				font-weight: bolder;
+				text-decoration: none;
+				text-shadow: silver 1px 1px;
+			}
+
+			#body {
+				padding: 30px;
+				margin-top: 20px;
+				margin-bottom: 20px;
+				position: relative;
+				min-width: 1000px;
+			}
+
+			#main-content {
+				background-color: {color:MainContentBackground};
+				border: 1px solid grey;
+				border-radius: 20px 20px;
+				-moz-border-radius: 20px 20px 20px 20px;
+				-webkit-border-radius: 20px 20px;
+				padding: 10px;
+				margin: 10px 210px 10px 10px;
+				display: block;
+				width: auto;
+				min-width: 758px;
+			}
+
+			#searchresultcount {
+				font-style: italic;
+			}
+			#searchresultcount .query {
+				font-weight: bolder;
+				padding-left: 1.5em;
+				padding-right: 1.5em;
+			}
+
+			#main-content > .post {
+				position: relative;
+				margin: 30px 70px 60px 30px;
+			}
+			#main-content > .post > .labels > a.date {
+				font-size: 0.8em; 
+				text-decoration: underline;
+				padding: 5px 10px;
+/* [FIXME] .post-body-part の下にまわってしまうので、一時的に無効化
+				-moz-transform: translate(-30px, 20px) rotate(-30deg);
+				-webkit-transform: translate(-30px, 20px) rotate(-30deg);
+				-o-transform: translate(-30px, 20px) rotate(-30deg);
+*/
+				display: inline-block;
+				z-index: 1;
+			}
+			#main-content > .post > .labels > a.date.new-day-date {
+				background-color: #ff4500;
+			}
+			#main-content > .post > .labels > a.date.same-day-date {
+				background-color: #ffa07a;
+			}
+			#main-content > .post > .labels > a.date:link {
+				color: #00e;
+			}
+			#main-content > .post > .labels > a.date:visited {
+				color: gray;
+			}
+			#main-content > .post > .labels > a.date:hover,
+			#main-content > .post > .labels > a.date:active {
+				text-decoration: none;
+			}
+
+			#main-content > .post > * > .post-title-part {
+				padding-left: 30px; /* .post-body-partのpadding-leftと同値 */
+				position: absolute;
+				top: 60px;
+				z-index: 1;
+			}
+			#main-content > .post > * > .post-title-part:before {
+				color: {color:PostTitle};
+				content: "▼";
+			}
+			#main-content > .post > * > .post-title-part > a {
+				font-family: {font:PostTitle};
+				font-size: 1.2em;
+				font-weight: bolder;
+				color: {color:PostTitle};
+				text-decoration: none;
+			}
+			#main-content .post-body-part,
+			#main-content .post-info-part {	/* ブロック下部グラデーション */
+				background-image: linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.25));
+				background-image: -moz-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.25));
+				background-image: -webkit-gradient(linear, left top, left bottom , from(rgba(0,0,0,0)), to(rgba(0,0,0,0.25)));
+				background-size: 1px 60px;
+				-moz-background-size: 1px 60px;
+				-webkit-background-size: 1px 60px;
+				-o-background-size: 1px 60px;
+				background-repeat: repeat-x;
+				background-position: bottom;
+				box-shadow: 6px 6px 3px silver;
+				-moz-box-shadow: 6px 6px 3px silver;
+				-webkit-box-shadow: 6px 6px 3px silver;
+			}
+			#main-content > .post > * > .post-body-part blockquote {
+				background-clip: padding-box;
+				-moz-background-clip: padding;
+				-webkit-background-clip: padding;
+				-khtml-background-clip: padding-box;
+				border-left: 1px dashed {color:PostText};
+				padding: 0.25em;
+				padding-top: 1em;
+				margin: 0;
+				position: relative;
+			}
+			#main-content > .post > * > .post-body-part blockquote:before {
+				content: '"';
+				color: {color:PostText};
+				font-size: 2em;
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+			#main-content > .post > * > .post-body-part blockquote blockquote {
+				margin-left: 1em;
+			}
+			#main-content > .post > * > .post-body-part {
+				font-family: {font:PostText};
+				color: {color:PostText};
+				background-color: {color:PostBackground};
+				border: 1px solid gray;
+				border-radius: 16px;
+				-moz-border-radius: 16px;
+				-webkit-border-radius: 16px;
+				padding: 30px;
+				margin: 0;
+				margin-right: 70px;
+				position: relative;
+				display: block;
+				min-height: 80px;
+			}
+			#main-content > .post > * > .post-title-part + .post-body-part { /* .post-title-part を流し込むだけのpadding-topを */
+				padding-top: 90px;
+			}
+			#main-content > .post > * > .post-body-part:after { /* フキダシの根本部分 */
+				content: "";
+				color: transparent;
+				/* background-color: {color:PostBackground}; */
+				background-image: linear-gradient(-45deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 50%, {color:PostBackground} 50%, {color:PostBackground} 100%);
+				background-image: -moz-linear-gradient(-45deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 50%, {color:PostBackground} 50%, {color:PostBackground} 100%);
+				background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,0)) 0%, color-stop(50%, rgba(0,0,0,0)), color-stop(50%, {color:PostBackground}), to({color:PostBackground}));
+				border: 0 solid transparent;
+				border-right: 1px solid gray;
+				border-bottom: 1px solid gray;
+				box-shadow: 6px 6px 3px silver;
+				-moz-box-shadow: 6px 6px 3px silver;
+				-webkit-box-shadow: 6px 6px 3px silver;
+				display: block;
+				position: absolute;
+				bottom: 60px;	/* .post本体の下部グラデより上に */
+				right: 0;
+				width: 50px;
+				height: 50px;
+				transform-origin: top left;
+				-moz-transform-origin: top left;
+				-webkit-transform-origin: top left;
+				-o-transform-origin: top left;
+				transform: skew(45deg);
+				-moz-transform: skew(45deg);
+				-webkit-transform: skew(45deg);
+				-o-transform: skew(45deg);
+			}
+			#main-content .chat > .post-body-part > * {
+				display:block;
+				z-index: 2;	/* フキダシの根本を隠す為 */
+			}
+			#main-content .chat > .post-body-part > *:nth-of-type(odd) {
+				background-color: #ffffe0;
+			}
+			#main-content .chat > .post-body-part > *:nth-of-type(even) {
+				background-color: #e0ffff;
+			}
+			#main-content .chat > .post-body-part > dt {
+				float: left;
+				border-top: solid 5px transparent;
+				border-right: none 0px transparent;
+				border-bottom: solid 5px transparent;
+				border-left: solid 15px black;
+				padding-left: 10px;
+				padding-right: 20px;
+			}
+			#main-content .chat > .post-body-part > dd {
+				font-style: italic;
+				border-top: solid 5px transparent;	/* dtのものと同値 */
+				border-bottom: solid 5px transparent;	/* dtのものと同値 */
+				padding-left: 30px;	/* [FIXME] 折り返したddの各行頭を揃える方法 */
+			}
+			#main-content .chat > .post-body-part > dd:after {
+				clear: left;
+			}
+
+			#main-content > .post > * > .post-info-part {
+				font-size: 0.7em;
+				font-style: italic;
+				font-family: {font:InfoText};
+				color: {color:InfoText};
+				background-color: {color:InfoBackground};
+				border: 1px solid gray;
+				border-radius: 16px;
+				-moz-border-radius: 16px;
+				-webkit-border-radius: 16px;
+				padding: 15px;
+				display: block;
+				position: relative;
+				top: -10px;
+				left: 20px;
+				z-index: 1;
+			}
+
+			#sub-content {
+				font-family: {font:SubContentText};
+				color: {color:SubContentText};
+				background-color: {color:SubContentBackground};
+				padding: 10px;
+				margin: 10px 10px 10px 10px;
+				border: 1px solid grey;
+				border-radius: 20px 20px;
+				-moz-border-radius: 20px 20px 20px 20px;
+				-webkit-border-radius: 20px 20px;
+				display: block;
+				width: 170px;
+				height: 100%;
+				position: absolute;
+				right: 10px;
+				top: 30px;
+			}
+			#sub-content > #tumblelog-description {
+				font-family: {font:Description};
+				color: {color:Description};
+				background-color: {color:DescriptionBackground};
+				margin: 10px;
+			}
+
+			{CustomCSS}
+			/* ]]> */
+		/* }}} */</style>
+	</head>
+	<body>
+		<div id="header">
+			<h1><a href="/">{Title}</a></h1>
+
+			<ul id="nav">
+				<li id="nav-home"><a href="/">Home</a></li>
+				<li id="nav-archive"><a href="/archive">Archive</a></li>
+				<li id="nav-rss"><a href="{RSS}" rel="alternate">RSS</a></li>
+				<li id="nav-search"> <!-- {{{ -->
+					<form method="get" action="http://www.google.co.jp/search" title="Powered by Google">
+						<div>
+							<input name="q" type="text" size="31" maxlength="255" value="{SearchQuery}" />
+							<input type="submit" value="検索" />
+							<input name="domains" type="hidden" value="meigenbako.tumblr.com" />
+							<input name="sitesearch" type="hidden" value="meigenbako.tumblr.com" />
+						</div>
+					</form>
+					<!-- 現在、日本語での検索が効かない為コメントアウト
+					<form action="/search" method="get">
+						<div>
+							<input type="text" name="q" value="{SearchQuery}"/>
+							<input type="submit" value="Search"/>
+						</div>
+					</form>
+					-->
+				</li> <!-- }}} -->
+			</ul>
+		</div>
+		
+		<div id="body">
+			<div id="main-content">
+				{block:SearchPage}
+				<div id="searchresultcount">
+					<p>Your search for <span class="query">{SearchQuery}</span> returned {SearchResultCount} result(s).</p>
+				</div>
+				{/block:SearchPage}
+
+				{block:Posts}
+				<div class="post">
+					<div class="labels">
+						{block:NewDayDate}
+							<a href="{Permalink}" class="date new-day-date" title="permalink @ {Month} {DayOfMonth}">{Month} {DayOfMonth}</a>
+						{/block:NewDayDate}
+
+						{block:SameDayDate}
+							<a href="{Permalink}" class="date same-day-date" title="permalink @ {Month} {DayOfMonth}">{Month} {DayOfMonth}</a>
+						{/block:SameDayDate}
+					</div>
+
+					{block:Regular}
+						<div class="regular">
+							{block:Title}<h2 class="post-title-part"><a href="{Permalink}">{Title}</a></h2>{/block:Title}
+							<div class="post-body-part">{Body}</div>
+						</div>
+					{/block:Regular}
+
+					{block:Photo}
+						<div class="photo">
+							<div class="post-body-part">{LinkOpenTag}
+								<img src="{PhotoURL-400}" alt="{PhotoAlt}" />
+							{LinkCloseTag}</div>
+							{block:Caption}
+								<div class="caption post-info-part">{Caption}</div>
+							{/block:Caption}
+						</div>
+					{/block:Photo}
+
+					{block:Quote}
+						<div class="quote">
+							<!-- HTMLの場合もあるので、blockquoteの子はqにはしない -->
+							<blockquote class="post-body-part"><div>{Quote}</div></blockquote>
+							{block:Source}<div class="source post-info-part">{Source}</div>{/block:Source}	<!-- コメント等が在る可能性もあるのでcite要素にはしない -->
+						</div>
+					{/block:Quote}
+
+					{block:Link}
+						<div class="link">
+							<a href="{URL}" class="link post-body-part" {Target}>{Name}</a>
+							{block:Description}
+								<span class="description post-info-part">{Description}</span>
+							{/block:Description}
+						</div>
+					{/block:Link}
+
+					{block:Chat}
+						<div class="chat">
+							{block:Title}<h2 class="post-title-part"><a href="{Permalink}">{Title}</a></h2>{/block:Title}
+							<dl class="post-body-part">
+								{block:Lines}
+								{block:Label}<dt>{Label}</dt>{/block:Label}
+										<dd>{Line}</dd>
+								{/block:Lines}
+							</dl>
+						</div>
+					{/block:Chat}
+
+					{block:Audio}
+						<div class="audio">
+							<div class="post-body-part">{AudioPlayerBlack}</div>
+							{block:Caption}
+							<div class="caption post-info-part">{Caption}</div>
+							{/block:Caption}
+						</div>
+					{/block:Audio}
+
+					{block:Video}
+						<div class="video">
+							<div class="post-body-part">{Video-400}</div>
+							{block:Caption}
+							<div class="caption post-info-part">{Caption}</div>
+							{/block:Caption}
+						</div>
+					{/block:Video}
+				</div>
+				{/block:Posts}
+
+				<div class="page-navigations">
+					{block:PreviousPage}
+					<a href="{PreviousPage}" rel="prev">&#171; Previous</a> &nbsp;&nbsp;
+					{/block:PreviousPage}
+
+					{block:NextPage}
+					<a href="{NextPage}" rel="next">Next &#187;</a>
+					{/block:NextPage}
+				</div>
+			</div>
+
+			<div id="sub-content">
+				<div id="tumblelog-description">{Description}</div>
+
+				<!-- [DEBUG] script要素を有効可 -->
+				<style type="text/css"> /* 暫定処理 */
+					/* <![CDATA[ */
+					#ffbadge { font-size: 0.5em; background-color: white; }
+					/* ]]> */
+				</style>
+				<script src="http://amaisaeta.up.seesaa.net/ffbadge/ffbadge.js" type="application/javascript" charset="utf-8"></script>
+
+				<div id="amazon-affiliate"> <!-- {{{ -->
+					<div id="amazon-affiliate-search-widget">
+						<script charset="utf-8" type="application/javascript" src="http://ws.amazon.co.jp/widgets/q?ServiceVersion=20070822&amp;MarketPlace=JP&amp;ID=V20070822/JP/tenjohnoshimi-22/8002/bd0e1413-850a-43c7-8285-060277c74d35"> </script> <noscript><div><a href="http://ws.amazon.co.jp/widgets/q?ServiceVersion=20070822&amp;MarketPlace=JP&amp;ID=V20070822%2FJP%2Ftenjohnoshimi-22%2F8002%2Fbd0e1413-850a-43c7-8285-060277c74d35&amp;Operation=NoScript">Amazon.co.jp ウィジェット</a></div></noscript>
+					</div>
+					<div id="amazon-affiliate-optimized-widget">
+						<script type="application/javascript">
+							// <![CDATA[
+						amazon_ad_tag = "meigenbako-22"; amazon_ad_width = "120";
+					amazon_ad_height = "600"; amazon_ad_include = "名言;迷言;言葉";
+					amazon_ad_categories = "abcdle"; amazon_ad_logo = "hide";//-->
+					// ]]>
+					</script>
+					<script type="application/javascript" src="http://www.assoc-amazon.jp/s/ads.js"></script>
+				</div>
+			</div> <!-- }}} -->
+		</div>
+		</div>
+
+		<div id="footer">
+			<!-- [TODO] -->
+		</div>
+	</body>
+</html>
+<!-- vim: set foldmethod=marker filetype=xhtml : -->
